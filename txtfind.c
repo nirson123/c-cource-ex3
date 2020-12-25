@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #define LINE 256
 #define WORD 30
 
@@ -7,7 +8,7 @@ int getLine(char s[]) {
 	char c;
 	int i = 0;
 	while ((c = getchar()) != '\n' && c != EOF) {
-		s[i++] = c;
+		if (c != '\r') { s[i++] = c; }
 	}
 	s[i] = '\0';
 	return i;
@@ -18,7 +19,7 @@ int getword(char w[]){
 	int i = 0;
 	
 	while ((c = getchar()) != '\n' && c != '\t' && c != ' ' && c != EOF) {
-		w[i++] = c;
+		if (c != '\r') { w[i++] = c; }
 	}
 	w[i] = '\0';
 	return i;
@@ -62,13 +63,9 @@ void print_lines(char* str) {
 void print_similar_words(char* str) {
 	char word[WORD];
 	while (getword(word) > 0) {
-
-
-		printf("%s ", word);
-
-	//	if (isSimilar(str, word)) {
-		//	printf("%s\n", word);
-		//}
+		if (isSimilar(str, word)) {
+			printf("%s\n", word);
+		}
 	}
 }
 
@@ -77,7 +74,7 @@ int main() {
 	char word[WORD];
 	getword(word);
 	char SO = getchar();
-	getchar(); getchar();
+	getchar(); getchar(); getchar(); getchar();
 	if (SO == 'a') {
 		print_lines(word);
 	}
